@@ -74,6 +74,31 @@ body {
   align-items: start;
 }
 
+.page-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 16px 22px;
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  background: rgba(255, 248, 238, 0.72);
+  box-shadow: var(--shadow);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.page-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  color: var(--accent-strong);
+  text-decoration: underline;
+}
+
 .panel {
   height: min(72vh, calc(100dvh - 220px));
   max-height: calc(100dvh - 220px);
@@ -260,6 +285,11 @@ body {
 @media (max-width: 960px) {
   .workspace {
     grid-template-columns: 1fr;
+  }
+
+  .page-footer {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .panel,

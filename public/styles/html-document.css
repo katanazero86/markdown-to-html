@@ -75,6 +75,30 @@ body {
   backdrop-filter: blur(8px);
 }
 
+.document-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 16px 22px;
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  background: rgba(255, 248, 238, 0.72);
+  box-shadow: var(--shadow);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.document-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.document-footer a:hover {
+  text-decoration: underline;
+}
+
 .markdown-body {
   line-height: 1.72;
   font-size: 18px;
@@ -139,4 +163,11 @@ body {
   border-radius: 999px;
   background: rgba(36, 24, 15, 0.08);
   color: #7c2d12;
+}
+
+@media (max-width: 640px) {
+  .document-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
