@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= documentTitle %></title>
+    <link rel="stylesheet" href="/styles/preview-page.css">
+    <script>
+      window.previewPageConfig = {
+        documentEndpoint: '/document',
+        renderEndpoint: '/render'
+      };
+    </script>
+    <script type="module" src="/scripts/preview-page.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero">
+        <span class="eyebrow">Interactive Preview</span>
+        <h1><%= documentTitle %></h1>
+        <p>Seeded from <%= sourceName %>. Edit Markdown on the left and download either side whenever needed.</p>
+      </section>
+      <section class="workspace">
+        <section class="panel">
+          <header class="panel-header">
+            <div class="panel-heading">
+              <strong>Markdown Input</strong>
+              <span>Editable source</span>
+            </div>
+            <button id="download-markdown" class="download-button" type="button">Download .md</button>
+          </header>
+          <div class="editor-shell">
+            <pre id="line-gutter" class="line-gutter" aria-hidden="true"></pre>
+            <textarea id="markdown-editor" class="editor" spellcheck="false" wrap="off"><%= markdownText %></textarea>
+          </div>
+        </section>
+        <section class="panel">
+          <header class="panel-header">
+            <div class="panel-heading">
+              <strong>HTML Preview</strong>
+              <span>Rendered document</span>
+            </div>
+            <button id="download-html" class="download-button" type="button">Download .html</button>
+          </header>
+          <article id="preview-body" class="preview-body"><%- bodyContent %></article>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
