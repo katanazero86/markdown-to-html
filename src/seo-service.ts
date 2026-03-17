@@ -65,7 +65,7 @@ export function buildPreviewSeoMetadata(input: PreviewSeoInput): SeoMetadata {
         offers: {
           '@type': 'Offer',
           price: '0',
-          priceCurrency: 'USD'
+          priceCurrency: 'KRW'
         }
       },
       null,
