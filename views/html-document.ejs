@@ -3,7 +3,21 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= documentTitle %></title>
+    <title><%= seo.title %></title>
+    <meta name="description" content="<%= seo.metaDescription %>">
+    <meta name="robots" content="<%= seo.robotsContent %>">
+    <meta name="author" content="katanazero86">
+    <meta name="theme-color" content="#b3541e">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="<%= seo.title %>">
+    <meta property="og:description" content="<%= seo.metaDescription %>">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="<%= seo.title %>">
+    <meta name="twitter:description" content="<%= seo.metaDescription %>">
+    <% if (seo.canonicalUrl) { %>
+    <link rel="canonical" href="<%= seo.canonicalUrl %>">
+    <% } %>
+    <script type="application/ld+json"><%- seo.jsonLd %></script>
     <style>
 <%- stylesheetContent %>
     </style>

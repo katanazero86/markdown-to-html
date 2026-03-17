@@ -3,6 +3,12 @@ import express from 'express';
 import { defaultMarkdown } from './default-markdown.js';
 import { markdownToHtml } from './markdown-to-html.js';
 import {
+  buildDocumentSeoMetadata,
+  buildPreviewSeoMetadata,
+  getRobotsText,
+  getSiteUrl
+} from './seo-service.js';
+import {
   getProjectRootPath,
   getViewsDirectoryPath,
   renderHtmlDocumentTemplate,
@@ -17,6 +23,7 @@ const initialDocument = {
   sourceName: 'built-in example'
 };
 
+app.set('trust proxy', true);
 app.set('views', getViewsDirectoryPath());
 app.set('view engine', 'ejs');
 app.use(express.text({ type: 'text/plain', limit: '1mb' }));
@@ -28,10 +35,13 @@ app.use(express.static(`${projectRootPath}/public`));
  */
 app.get('/', async (_request, response) => {
   try {
+    const siteUrl = getSiteUrl(response.req);
+    const pageUrl = `${siteUrl}/`;
     const bodyContent = markdownToHtml(initialDocument.markdownText);
     const pageHtml = await renderPreviewPageTemplate({
       bodyContent,
       documentTitle: 'Markdown Preview',
+      seo: buildPreviewSeoMetadata({ pageUrl }),
       sourceName: initialDocument.sourceName,
       markdownText: initialDocument.markdownText
     });
@@ -64,9 +74,15 @@ app.post('/document', async (request, response) => {
     const sourceName = typeof request.body?.sourceName === 'string' ? request.body.sourceName : 'markdown-input.md';
     const documentTitle = typeof request.body?.documentTitle === 'string' ? request.body.documentTitle : 'markdown-preview';
     const bodyContent = markdownToHtml(markdownText);
+    const siteUrl = getSiteUrl(request);
     const htmlDocument = await renderHtmlDocumentTemplate({
       bodyContent,
       documentTitle,
+      seo: buildDocumentSeoMetadata({
+        bodyContent,
+        documentTitle,
+        siteUrl
+      }),
       sourceName
     });
 
@@ -74,6 +90,14 @@ app.post('/document', async (request, response) => {
   } catch (error) {
     response.status(400).type('text').send(getErrorMessage(error));
   }
+});
+
+/**
+ * 검색 엔진 크롤러가 사이트 접근 정책을 읽을 수 있도록 robots.txt를 제공한다.
+ */
+app.get('/robots.txt', (request, response) => {
+  const siteUrl = getSiteUrl(request);
+  response.type('text/plain').send(getRobotsText(siteUrl));
 });
 
 app.listen(port, () => {

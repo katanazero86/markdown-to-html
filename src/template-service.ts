@@ -12,6 +12,13 @@ const viewsDirectoryPath = path.join(projectRootPath, 'views');
 type HtmlDocumentTemplateData = {
   bodyContent: string;
   documentTitle: string;
+  seo: {
+    canonicalUrl?: string;
+    jsonLd: string;
+    metaDescription: string;
+    robotsContent: string;
+    title: string;
+  };
   sourceName: string;
 };
 
@@ -20,6 +27,13 @@ type PreviewPageTemplateData = {
   documentTitle: string;
   sourceName: string;
   markdownText: string;
+  seo: {
+    canonicalUrl?: string;
+    jsonLd: string;
+    metaDescription: string;
+    robotsContent: string;
+    title: string;
+  };
 };
 
 export function getProjectRootPath(): string {
